@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          {{ __('Daftar Stock') }}
+          {{ __('Penerimaan Barang') }}
       </h2>
   </x-slot>
 
@@ -9,9 +9,14 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
               <div class="p-6 text-gray-900 dark:text-gray-100">
-
-                  {{-- <x-primary-button tag="a" href="{{route('koperasi.admin.kelola_barang.create')}}">New Barang</x-primary-button>
-                  <br><br> --}}
+                  <div class="flex justify-end items-center">
+                        <!-- Form Pencarian -->
+                        <form method="GET" action="{{ route('koperasi.admin.kelola_stock') }}" class="flex items-center">
+                            <input type="text" name="search" placeholder="Cari Barang..." class="border border-gray-300 px-4 py-2 rounded-lg" value="{{ request('search') }}">
+                            <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+                        </form>
+                    </div>
+                    <br><br>
 
                   <div class="flex flex-col">
                       <div class="-m-1.5 overflow-x-auto">
@@ -24,6 +29,7 @@
                                               <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Nama Barang</th>
                                               <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Jumlah Stock</th>
                                               <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Masuk</th>
+                                              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Ditambahkan</th>
                                               <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Action</th>
                                           </tr>
                                       </thead>
@@ -35,13 +41,14 @@
                                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $good->nama_barang }}</td>
                                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $good->jumlah }}</td>
                                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $good->tanggal_ditambahkan }}</td>
+                                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $good->tanggal_masuk }}</td>
                                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                  <x-primary-button tag="a" href="{{ route('koperasi.admin.kelola_barang.edit', ['id' => $good->id]) }}"> Edit </x-primary-button>
-                                                  <x-danger-button
+                                                  <x-primary-button tag="a" href="{{ route('koperasi.admin.kelola_stock.edit', ['id' => $good->id]) }}"> Tambah Stock </x-primary-button>
+                                                  {{-- <x-danger-button
                                                   x-data=""
                                                   x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
                                                   x-on:click="$dispatch('set-action', '{{ route('koperasi.admin.kelola_barang.destroy', $good->id) }}')"
-                                              >{{ __('Delete') }}</x-danger-button>
+                                                >{{ __('Delete') }}</x-danger-button> --}}
                                               </td>
                                           </tr>
                                           @endforeach

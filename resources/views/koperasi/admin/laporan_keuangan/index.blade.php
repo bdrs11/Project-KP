@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          {{ __('Laporan Pemasukan') }}
+          {{ __('Laporan Transaksi') }}
       </h2>
   </x-slot>
 
@@ -25,7 +25,6 @@
                                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Total Terjual</th>
                                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Uang Masuk</th>
                                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Transaksi</th>
-                                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Action</th>
                                 </tr>
                               </thead>
                               <tbody class="divide-y divide-gray-200 dark:divide-gray-700">

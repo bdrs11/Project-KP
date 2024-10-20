@@ -17,6 +17,7 @@ class Goods extends Model
         'ukuran',
         'jumlah',
         'tanggal_ditambahkan',
+        'tanggal_masuk',
         'categoriesid',
         'supplierid',
     ];

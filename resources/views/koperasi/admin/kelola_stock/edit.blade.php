@@ -18,11 +18,11 @@
                             <x-input-error class="mt-2" :messages="$errors->get('nama_barang')" />
                         </div>
 
-                        <div class="max-w-xl">
+                        {{-- <div class="max-w-xl">
                             <x-input-label for="harga" value="Harga Rp" />
                             <x-text-input id="harga" type="text" name="harga" class="mt-1 block w-full" value="{{ old('harga', $goods->harga) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('harga')" />
-                        </div>
+                        </div> --}}
 
                         <div class="max-w-xl">
                             <x-input-label for="ukuran" value="Ukuran" />
@@ -35,6 +35,13 @@
                             <x-text-input id="jumlah" type="text" name="jumlah" class="mt-1 block w-full" value="{{ old('jumlah', $goods->jumlah) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('jumlah')" />
                         </div>
+
+                        <div class="max-w-xl">
+                            <x-input-label for="tanggal_masuk" value="Tanggal Ditambahkan" />
+                            <x-text-input id="tanggal_masuk" type="date" name="tanggal_masuk" class="mt-1 block w-full" value="{{ old('tanggal_masuk') }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('tanggal_masuk')" />
+                        </div>
+                        <br>
 
                         <x-primary-button value="true">Update Data</x-primary-button>
                         <x-secondary-button tag="a" href="{{ route('koperasi.admin.kelola_stock') }}">Cancel</x-secondary-button>

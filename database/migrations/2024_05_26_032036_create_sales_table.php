@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('jumlah_barang');
             $table->decimal('harga_satuan', 19, 0);
             $table->decimal('total_harga', 19, 0);
+            $table->decimal('jumlah_uang', 19, 0);  // Tambahkan kolom jumlah uang
+            $table->decimal('kembalian', 19, 0);    // Tambahkan kolom kembalian
             $table->foreignId('goodid')->constrained('goods');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();

@@ -13,6 +13,8 @@ class Sale extends Model
         'jumlah_barang',
         'harga_satuan',
         'total_harga',
+        'jumlah_uang',   // Tambahkan jumlah uang
+        'kembalian',     // Tambahkan kembalian
         'tanggal_penjualan'
     ];
 

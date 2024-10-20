@@ -38,8 +38,8 @@ class GoodsController extends Controller
             'supplierid' => 'required|exists:suppliers,id', // Validasi supplier
             'nama_barang' => 'required|string|max:255',
             'harga' => 'required|numeric',
-            'ukuran' => 'nullable|string|max:255',
-            'jumlah' => 'required|integer',
+            // 'ukuran' => 'nullable|string|max:255',
+            // 'jumlah' => 'required|integer',
             'tanggal_ditambahkan' => 'required|date',
         ]);
     

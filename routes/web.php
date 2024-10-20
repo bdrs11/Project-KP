@@ -54,6 +54,7 @@ Route::get('/koperasi/admin/laporan_keuangan', [ReportSaleController::class, 'in
 Route::get('/koperasi/admin/penjualan', [SaleController::class, 'index'])->name('koperasi.admin.penjualan');
 Route::get('/koperasi/admin/penjualan/create', [SaleController::class, 'create'])->name('koperasi.admin.penjualan.create');
 Route::post('/koperasi/admin/penjualan', [SaleController::class, 'store'])->name('koperasi.admin.penjualan.store');
+Route::get('/koperasi/admin/penjualan/struk/{id}', [SaleController::class, 'printStruk'])->name('koperasi.admin.penjualan.struk');
 Route::delete('/koperasi/admin/penjualan/{id}', [SaleController::class, 'destroy'])->name('koperasi.admin.penjualan.destroy');
 
 Route::get('/koperasi/admin/suppliers', [SupplierController::class, 'index'])->name('koperasi.admin.suppliers');
@@ -71,5 +72,6 @@ Route::match(['put', 'patch'],'/koperasi/pengguna/anggota/{id}', [UserController
 Route::delete('/koperasi/pengguna/anggota/{id}', [UserController::class, 'destroy'])->name('koperasi.pengguna.anggota.destroy');
 
 Route::get('/koperasi/pengguna/laporan', [ReportController::class, 'index'])->name('koperasi.pengguna.laporan');
+Route::get('/koperasi/pengguna/laporan/pdf', [ReportController::class, 'cetakPDF'])->name('koperasi.pengguna.laporan.pdf');
 
 require __DIR__.'/auth.php';

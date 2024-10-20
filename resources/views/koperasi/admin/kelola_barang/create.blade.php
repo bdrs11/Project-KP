@@ -28,20 +28,6 @@
                         <br>
 
                         <div class="max-w-xl">
-                            <x-input-label for="ukuran" value="Ukuran" />
-                            <x-text-input id="ukuran" type="text" name="ukuran" class="mt-1 block w-full" value="{{ old('ukuran') }}" />
-                            <x-input-error class="mt-2" :messages="$errors->get('ukuran')" />
-                        </div>
-                        <br>
-
-                        <div class="max-w-xl">
-                            <x-input-label for="jumlah" value="Jumlah" />
-                            <x-text-input id="jumlah" type="text" name="jumlah" class="mt-1 block w-full" value="{{ old('jumlah') }}" required />
-                            <x-input-error class="mt-2" :messages="$errors->get('jumlah')" />
-                        </div>
-                        <br>
-
-                        <div class="max-w-xl">
                             <x-input-label for="tanggal_ditambahkan" value="Tanggal Ditambahkan" />
                             <x-text-input id="tanggal_ditambahkan" type="date" name="tanggal_ditambahkan" class="mt-1 block w-full" value="{{ old('tanggal_ditambahkan') }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('tanggal_ditambahkan')" />

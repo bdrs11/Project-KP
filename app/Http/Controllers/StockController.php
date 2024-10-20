@@ -7,11 +7,19 @@ use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['goods'] = Goods::all();
-        return view('koperasi.admin.kelola_stock.index', $data);
-    }
+        $search = $request->input('search');  // Ambil data dari input pencarian
+
+        // Jika ada input pencarian, cari berdasarkan nama_barang
+        if ($search) {
+            $goods = Goods::where('nama_barang', 'like', '%' . $search . '%')->get();
+        } else {
+            $goods = Goods::all();  // Jika tidak ada pencarian, tampilkan semua data
+        }
+    
+        return view('koperasi.admin.kelola_stock.index',['goods' => $goods]);
+    }  
 
     public function edit($id)
     {
@@ -24,9 +32,10 @@ class StockController extends Controller
     {
         $validatedData = $request->validate([
             'nama_barang' => 'required|string|max:255',
-            'harga' => 'required|numeric',
+            // 'harga' => 'required|numeric',
             'ukuran' => 'nullable|string|max:255',
             'jumlah' => 'required|integer',
+            'tanggal_masuk' => 'required|date',
         ]);
 
         $goods = Goods::findOrFail($id);

@@ -12,7 +12,7 @@
   
                     <div class="flex justify-between items-center">
                         <!-- Tombol New Barang -->
-                        <x-primary-button tag="a" href="{{route('koperasi.admin.kelola_barang.create')}}">New Barang</x-primary-button>
+                        <x-primary-button tag="a" href="{{route('koperasi.admin.kelola_barang.create')}}">+ Barang</x-primary-button>
   
                         <!-- Form Pencarian -->
                         <form method="GET" action="{{ route('koperasi.admin.kelola_barang') }}" class="flex items-center">
@@ -34,7 +34,7 @@
                                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Harga Rp</th>
                                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Ukuran</th>
                                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Jumlah Stock</th>
-                                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Ditambahkan</th>
+                                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Masuk</th>
                                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Action</th>
                                             </tr>
                                         </thead>
@@ -49,7 +49,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $good->jumlah }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $good->tanggal_ditambahkan }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                    <x-primary-button tag="a" href="{{ route('koperasi.admin.kelola_barang.edit', ['id' => $good->id]) }}"> Edit </x-primary-button>
+                                                    {{-- <x-primary-button tag="a" href="{{ route('koperasi.admin.kelola_barang.edit', ['id' => $good->id]) }}"> Edit </x-primary-button> --}}
                                                     <x-danger-button
                                                     x-data=""
                                                     x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"

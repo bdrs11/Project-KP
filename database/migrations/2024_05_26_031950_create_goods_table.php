@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('nama_barang', 255);
             $table->decimal('harga', 19, 0);
             $table->string('ukuran', 255)->nullable();
-            $table->integer('jumlah');
+            $table->integer('jumlah')->nullable();
             $table->date('tanggal_ditambahkan');
-            $table->timestamp('tanggal_keluar')->nullable();
+            $table->date('tanggal_masuk')->nullable();
             $table->foreignId('categoriesid')->constrained('categories')->onDelete('cascade')->default(1);
             $table->foreignId('supplierid')->constrained('suppliers')->onDelete('cascade');            
             $table->timestamps();

@@ -75,13 +75,13 @@
                   <li>
                     <a href="{{ route('koperasi.admin.laporan_keuangan') }}" class="nav-link d-flex align-items-center gap-2 text-white" aria-current="page">
                         @include("icons.keuangan")
-                      Laporan Keuangan
+                      Laporan Transaksi
                     </a>
                   </li>
                   <li>
                     <a href="{{ route('koperasi.pengguna.laporan') }}" class="nav-link d-flex align-items-center gap-2 text-white" aria-current="page">
                         @include("icons.laporan")
-                      Laporan
+                      Laporan Stock
                     </a>
                   </li>
                   <li>
