@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ReportSale;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class ReportSaleController extends Controller
 {
@@ -32,5 +33,17 @@ class ReportSaleController extends Controller
         $reports = ReportSale::with('sale')->get();
     
         return view('koperasi.admin.laporan_keuangan.index', compact('reports'));
+    }
+
+    public function cetakPDF(Request $request)
+    {
+        // Ambil data yang sama seperti pada tampilan laporan
+        $reports = ReportSale::with(['sale'])->get();  // Ganti sesuai dengan query yang kamu gunakan untuk laporan
+
+        // Muat view laporan dan kirim data ke dalamnya
+        $pdf =FacadePdf::loadView('koperasi.admin.laporan_keuangan.pdf', compact('reports'));
+        
+        // Unduh atau tampilkan PDF
+        return $pdf->download('laporan_stock.pdf');
     }
 }
