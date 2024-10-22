@@ -57,7 +57,7 @@
                   <li>
                     <a href="{{ route('koperasi.admin.kelola_stock') }}" class="nav-link d-flex align-items-center gap-2 text-white" aria-current="page">
                         @include("icons.stock")
-                      Kelola Stock
+                      Penerimaan Barang
                     </a>
                   </li>
                   <li>

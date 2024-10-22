@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\ProfileController;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome'); //welcome
+    return view('landing'); //welcome
 });
 
 Route::get('/dashboard', function () {
@@ -35,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/daftar_barang', [BarangController::class, 'index'])->name('daftar_barang');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
