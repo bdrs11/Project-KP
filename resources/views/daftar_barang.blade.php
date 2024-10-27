@@ -49,7 +49,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Daftar Barang</a></li>
                     <li class="nav-item"><a class="nav-link btn btn-outline-primary" href="{{ route('login') }}">Masuk</a></li>
                 </ul>

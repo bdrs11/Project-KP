@@ -4,16 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Goods;
 use App\Models\Sale;
+use App\Models\SaleItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['sales'] = Sale::all();
-
-        return view('koperasi.admin.penjualan.index', $data);
-    }
+        // Ambil semua item penjualan dan grup berdasarkan tanggal dan waktu
+        $sale_items = SaleItem::with('good', 'sale')
+            ->orderBy('tanggal_penjualan', 'desc') // Ubah ke 'desc' untuk urutan terbaru di atas
+            ->get()
+            ->groupBy(function ($item) {
+                return \Carbon\Carbon::parse($item->tanggal_penjualan)->format('Y-m-d H:i:s'); // Format tanggal dan waktu
+            });
+    
+        return view('koperasi.admin.penjualan.index', compact('sale_items'));
+    }     
 
     public function create()
     {
@@ -24,65 +33,77 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input dari form
+        // Validasi input terlebih dahulu
         $validatedData = $request->validate([
-            'goodid' => 'required|exists:goods,id',
-            'jumlah_barang' => 'required|integer|min:1',
-            'harga_satuan' => 'required|numeric|min:0',
-            'total_harga' => 'required|numeric|min:0',
-            'jumlah_uang' => 'required|numeric|min:0',
-            'kembalian' => 'nullable|numeric|min:0',
+            'total_harga' => 'required|numeric',
+            'jumlah_uang' => 'required|numeric',
+            'kembalian' => 'required|numeric',
+            'selected_goods' => 'required|json'
         ]);
 
-        // Ambil data barang dari tabel goods
-        $barang = Goods::findOrFail($validatedData['goodid']);
+        // Decode data barang yang dipilih
+        $selectedGoods = json_decode($request->input('selected_goods'), true);
 
-        // Cek apakah jumlah barang di stok mencukupi
-        if ($barang->jumlah < $validatedData['jumlah_barang']) {
-            return redirect()->back()->withErrors(['jumlah_barang' => 'Jumlah barang tidak mencukupi'])->withInput();
+        // Pastikan barang yang dipilih tidak kosong
+        if (empty($selectedGoods)) {
+            return back()->withErrors(['error' => 'Tidak ada barang yang dipilih.']);
         }
 
-        // Cek apakah jumlah uang yang dimasukkan cukup untuk total harga
-        if ($validatedData['jumlah_uang'] < $validatedData['total_harga']) {
-            return redirect()->back()->withErrors(['jumlah_uang' => 'Jumlah uang yang dimasukkan tidak cukup'])->withInput();
-        }
+        DB::beginTransaction();
+        try {
+            // Buat data transaksi baru di tabel sales
+            $sale = new Sale();
+            $sale->userid = Auth::id(); // Set user_id dengan id pengguna yang sedang login
+            $sale->total_harga = $request->input('total_harga');
+            $sale->jumlah_uang = $request->input('jumlah_uang');
+            $sale->kembalian = $request->input('kembalian');
+            $sale->save();
 
-        // Hitung kembalian (jumlah uang - total harga)
-        $kembalian = $validatedData['jumlah_uang'] - $validatedData['total_harga'];
+            // Simpan setiap barang yang dipilih ke dalam tabel sale_items
+            foreach ($selectedGoods as $good) {
+                // Simpan item penjualan
+                DB::table('sale_items')->insert([
+                    'saleid' => $sale->id, // Foreign key untuk transaksi
+                    'goodid' => $good['id'], // Foreign key untuk barang
+                    'jumlah' => $good['jumlah'], // Jumlah barang
+                    'harga_satuan' => $good['harga'], // Harga satuan
+                    'total_harga' => $good['harga'] * $good['jumlah'], // Total harga
+                ]);
 
-        // Buat data penjualan
-        $sales = Sale::create([
-            'nama_barang' => $barang->nama_barang,
-            'goodid' => $validatedData['goodid'],
-            'jumlah_barang' => $validatedData['jumlah_barang'],
-            'harga_satuan' => $validatedData['harga_satuan'],
-            'total_harga' => $validatedData['total_harga'],
-            'jumlah_uang' => $validatedData['jumlah_uang'],
-            'kembalian' => $kembalian,
-        ]);
+                // Kurangi jumlah barang di tabel goods
+                $item = Goods::find($good['id']);
+                if ($item) {
+                    // Pastikan stok cukup
+                    if ($item->jumlah >= $good['jumlah']) {
+                        $item->jumlah -= $good['jumlah'];
+                        $item->save();
+                    } else {
+                        // Kembalikan error jika stok tidak cukup
+                        DB::rollBack();
+                        return back()->withErrors(['error' => 'Stok tidak cukup untuk barang: ' . $item->nama_barang]);
+                    }
+                }
+            }
 
-        // Kurangi jumlah barang di stok
-        $barang->jumlah -= $validatedData['jumlah_barang'];
-        $barang->save();  // Simpan perubahan ke database
+            DB::commit();
 
-        // Cek apakah penjualan berhasil disimpan
-        if ($sales) {
-            $notification['alert-type'] = 'success';
-            $notification['message'] = 'Transaksi Created Successfully';
-            return redirect()->route('koperasi.admin.penjualan')->with(['sale_id' => $sales->id])->with($notification);
-        } else {
-            $notification['alert-type'] = 'error';
-            $notification['message'] = 'Failed to Create Transaksi';
-            return redirect()->route('koperasi.admin.penjualan.store')->withInput()->with($notification);
+            return redirect()->route('koperasi.admin.penjualan')->with('success', 'Transaksi berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
 
     public function printStruk($id)
     {
-        $sale = Sale::findOrFail($id); // Ambil penjualan berdasarkan ID
+        // Memuat relasi saleItems dan user
+        $sale = Sale::with(['saleItems.good', 'user'])->findOrFail($id);
     
-        return view('koperasi.admin.penjualan.struk', compact('sale'));
-    }    
+        return view('koperasi.admin.penjualan.struk', [
+            'sale' => $sale,
+            'sale_items' => $sale->saleItems,
+        ]);
+    }     
     
     public function destroy($id)
     {

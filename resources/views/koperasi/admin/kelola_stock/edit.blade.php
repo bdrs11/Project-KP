@@ -26,7 +26,7 @@
 
                         <div class="max-w-xl">
                             <x-input-label for="ukuran" value="Ukuran" />
-                            <x-text-input id="ukuran" type="text" name="ukuran" class="mt-1 block w-full" value="{{ old('ukuran', $goods->ukuran) }}" required />
+                            <x-text-input id="ukuran" type="text" name="ukuran" class="mt-1 block w-full" value="{{ old('ukuran', $goods->ukuran) }}" />
                             <x-input-error class="mt-2" :messages="$errors->get('ukuran')" />
                         </div>
 

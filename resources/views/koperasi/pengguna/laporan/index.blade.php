@@ -52,9 +52,7 @@
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Barang</th>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Harga (Rp)</th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Terjual</th>
-                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock Tersisa</th>
-                                                {{-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jumlah Uang Masuk (Rp)</th> --}}
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jumlah Stock</th>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Stok Masuk</th>
                                             </tr>
                                         </thead>
@@ -65,9 +63,7 @@
                                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $num++ }}</td>
                                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $report->goods->nama_barang ?? 'Tidak ada data' }}</td>
                                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ number_format($report->goods->harga ?? 0, 0, ',', '.') }}</td>
-                                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $report->total_terjual ?? 'Tidak ada data' }}</td>
                                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $report->goods->jumlah ?? 'Tidak ada data' }}</td>
-                                                    {{-- <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ number_format($report->total_pemasukan ?? 0, 0, ',', '.') }}</td> --}}
                                                     <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">{{ $report->tanggal_stok_masuk ?? 'Tidak ada data' }}</td>
                                                 </tr>
                                             @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Goods;
 use App\Models\Report;
 use App\Models\Sale;
+use App\Models\SaleItem;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 
@@ -17,21 +18,23 @@ class ReportController extends Controller
         $year = $request->input('year', now()->year);
     
         // Ambil data penjualan berdasarkan filter bulan dan tahun
-        $sales = Sale::whereYear('tanggal_penjualan', $year)
+        $sale_items = SaleItem::whereYear('tanggal_penjualan', $year)
                     ->whereMonth('tanggal_penjualan', $month)
                     ->get();
     
-        // Ambil semua barang
-        $goods = Goods::all();
+        // Ambil barang yang masuk pada bulan dan tahun yang dipilih
+        $goods = Goods::whereYear('tanggal_ditambahkan', $year)
+                      ->whereMonth('tanggal_ditambahkan', $month)
+                      ->get();
     
         // Buat array untuk menampung laporan
         $reports = [];
     
         foreach ($goods as $good) {
             // Total barang terjual
-            $totalTerjual = $sales->where('goodid', $good->id)->sum('jumlah_barang');
+            $totalTerjual = $sale_items->where('goodid', $good->id)->sum('jumlah_barang');
             // Total pemasukan
-            $totalPemasukan = $sales->where('goodid', $good->id)->sum('total_harga');
+            $totalPemasukan = $sale_items->where('goodid', $good->id)->sum('total_harga');
             // Stock tersisa
             $stockTersisa = $good->jumlah - $totalTerjual;
     
@@ -47,7 +50,7 @@ class ReportController extends Controller
     
         return view('koperasi.pengguna.laporan.index', compact('reports', 'month', 'year'));
     }    
-
+    
     public function cetakPdf(Request $request)
     {
         // Default bulan dan tahun saat ini
@@ -55,19 +58,21 @@ class ReportController extends Controller
         $year = $request->input('year', now()->year);
     
         // Ambil data penjualan berdasarkan filter bulan dan tahun
-        $sales = Sale::whereYear('tanggal_penjualan', $year)
+        $sale_items = SaleItem::whereYear('tanggal_penjualan', $year)
                     ->whereMonth('tanggal_penjualan', $month)
                     ->get();
     
-        // Ambil semua barang
-        $goods = Goods::all();
+        // Ambil barang yang masuk pada bulan dan tahun yang dipilih
+        $goods = Goods::whereYear('tanggal_masuk', $year)
+                      ->whereMonth('tanggal_masuk', $month)
+                      ->get();
     
         // Buat array untuk menampung laporan
         $reports = [];
     
         foreach ($goods as $good) {
             // Total barang terjual
-            $totalTerjual = $sales->where('goodid', $good->id)->sum('jumlah_barang');
+            $totalTerjual = $sale_items->where('goodid', $good->id)->sum('jumlah_barang');
             // Stock tersisa
             $stockTersisa = $good->jumlah - $totalTerjual;
     
@@ -84,6 +89,5 @@ class ReportController extends Controller
         $pdf = FacadePdf::loadView('koperasi.pengguna.laporan.pdf', compact('reports', 'month', 'year'));
     
         return $pdf->download('laporan-barang-' . $month . '-' . $year . '.pdf');
-    }
-    
+    }    
 }

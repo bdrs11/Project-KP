@@ -24,11 +24,14 @@
         th {
             background-color: #f2f2f2;
         }
+        tfoot td {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center;">Laporan Transaksi</h2>
-    <p style="text-align: center;">Tahun: 2024</p>
+    <h2 style="text-align: center;">Koperasi Sekolah SMP Suryacendikia</h2>
+    <p style="text-align: center;">Laporan Transaksi</p>
 
     <table>
         <thead>
@@ -42,18 +45,38 @@
             </tr>
         </thead>
         <tbody>
-            @php $num = 1; @endphp
-            @foreach($reports as $report)
-            <tr>
-                <td>{{ $num++ }}</td>
-                <td>{{ $report->sale->nama_barang }}</td>
-                <td>{{ number_format($report->sale->harga_satuan, 0, ',', '.') }}</td>
-                <td>{{ $report->sale->jumlah_barang }}</td>
-                <td>{{ number_format($report->pemasukan, 0, ',', '.') }}</td>
-                <td>{{ $report->tanggal_transaksi }}</td>
-            </tr>
+            @php
+                $num = 1;
+                $totalTerjual = 0;
+                $totalUangMasuk = 0;
+            @endphp
+            @foreach($report_sales as $report)
+                @foreach($report->saleItems as $saleItem) <!-- Loop untuk saleItems -->
+                <tr>
+                    <td>{{ $num++ }}</td>
+                    <td>{{ $saleItem->good->nama_barang ?? 'Data tidak tersedia' }}</td>
+                    <td>{{ number_format($saleItem->harga_satuan ?? 0, 0, ',', '.') }}</td>
+                    <td>{{ $saleItem->jumlah ?? 0 }}</td> <!-- Pastikan Anda mengakses jumlah yang benar -->
+                    <td>{{ number_format($report->pemasukan, 0, ',', '.') }}</td>
+                    <td>{{ $report->tanggal_transaksi }}</td>
+                </tr>
+                @endforeach
+                @php
+                    // Summing up the total values
+                    $totalTerjual += $report->saleItems->sum('jumlah'); // Jumlah total dari semua saleItems
+                    $totalUangMasuk += $report->pemasukan; // Pastikan ini sesuai dengan logika bisnis Anda
+                @endphp
             @endforeach
-        </tbody>
+        </tbody>        
+        
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right;">Total</td>
+                <td>{{ $totalTerjual }}</td>
+                <td>{{ number_format($totalUangMasuk, 0, ',', '.') }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
 </body>
 </html>

@@ -52,8 +52,7 @@
                 <th>No</th>
                 <th>Nama Barang</th>
                 <th>Harga (Rp)</th>
-                <th>Total Terjual</th>
-                <th>Stock Tersisa</th>
+                <th>Jumlah Stock </th>
                 <th>Tanggal Stok Masuk</th>
             </tr>
         </thead>
@@ -64,7 +63,6 @@
                     <td>{{ $num++ }}</td>
                     <td>{{ $report->goods->nama_barang ?? 'Tidak ada data' }}</td>
                     <td>{{ number_format($report->goods->harga ?? 0, 0, ',', '.') }}</td>
-                    <td>{{ $report->total_terjual ?? 'Tidak ada data' }}</td>
                     <td>{{ $report->goods->jumlah ?? 'Tidak ada data' }}</td>
                     <td>{{ $report->tanggal_stok_masuk ?? 'Tidak ada data' }}</td>
                 </tr>

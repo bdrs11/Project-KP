@@ -11,16 +11,18 @@ class GoodsController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');  // Ambil data dari input pencarian
-
+    
         // Jika ada input pencarian, cari berdasarkan nama_barang
         if ($search) {
-            $goods = Goods::where('nama_barang', 'like', '%' . $search . '%')->get();
+            $goods = Goods::where('nama_barang', 'like', '%' . $search . '%')
+                          ->orderBy('created_at', 'desc') // Urutkan berdasarkan waktu penambahan
+                          ->get();
         } else {
-            $goods = Goods::all();  // Jika tidak ada pencarian, tampilkan semua data
+            $goods = Goods::orderBy('created_at', 'desc')->get(); // Urutkan semua data berdasarkan waktu terbaru
         }
     
-        return view('koperasi.admin.kelola_barang.index',['goods' => $goods]);
-    }   
+        return view('koperasi.admin.kelola_barang.index', ['goods' => $goods]);
+    }      
 
     public function create()
     {

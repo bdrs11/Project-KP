@@ -23,5 +23,10 @@ class ReportSale extends Model
     {
         return $this->hasOneThrough(Goods::class, Sale::class, 'id', 'id', 'saleid', 'goodid');
     }
+
+    public function saleItems() // Gunakan nama relasi yang konsisten
+    {
+        return $this->hasMany(SaleItem::class, 'saleid');
+    }
 }
 

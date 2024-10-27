@@ -25,7 +25,7 @@ class GoodsSeeder extends Seeder
             ],
             [
                 'nama_barang' => 'BatikSekolah',
-                'harga' => 200000,
+                'harga' => 150000,
                 'ukuran' => 'M',
                 'jumlah' => 50,
                 'tanggal_ditambahkan' => Carbon::now(),
@@ -34,7 +34,7 @@ class GoodsSeeder extends Seeder
             ],
             [
                 'nama_barang' => 'Topi',
-                'harga' => 500000,
+                'harga' => 15000,
                 'ukuran' => 'M',
                 'jumlah' => 30,
                 'tanggal_ditambahkan' => Carbon::now(),

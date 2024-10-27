@@ -53,7 +53,7 @@ Route::get('/koperasi/admin/kelola_stock/{id}/edit', [StockController::class, 'e
 Route::match(['put', 'patch'],'/koperasi/admin/kelola_stock/{id}', [StockController::class, 'update'])->name('koperasi.admin.kelola_stock.update');
 
 Route::get('/koperasi/admin/laporan_keuangan', [ReportSaleController::class, 'index'])->name('koperasi.admin.laporan_keuangan');
-Route::get('/koperasi/admin/laporan_keuangan/pdf', [ReportSaleController::class, 'cetakPDF'])->name('koperasi.pengguna.laporan_keuangan.pdf');
+Route::get('/koperasi/admin/laporan_keuangan/pdf', [ReportSaleController::class, 'cetakPDF'])->name('koperasi.admin.laporan_keuangan.pdf');
 
 Route::get('/koperasi/admin/penjualan', [SaleController::class, 'index'])->name('koperasi.admin.penjualan');
 Route::get('/koperasi/admin/penjualan/create', [SaleController::class, 'create'])->name('koperasi.admin.penjualan.create');

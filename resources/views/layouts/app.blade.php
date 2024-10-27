@@ -84,12 +84,12 @@
                       Laporan Stock
                     </a>
                   </li>
-                  <li>
+                  {{-- <li>
                     <a href="{{ route('koperasi.pengguna.anggota') }}" class="nav-link d-flex align-items-center gap-2 text-white" aria-current="page">
                         @include("icons.anggota")
                       Anggota
                     </a>
-                  </li>
+                  </li> --}}
                 </ul>
                 <hr>
              </div>
