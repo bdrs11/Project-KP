@@ -53,7 +53,7 @@ class SaleController extends Controller
         try {
             // Buat data transaksi baru di tabel sales
             $sale = new Sale();
-            $sale->userid = Auth::id(); // Set user_id dengan id pengguna yang sedang login
+            $sale->userid = Auth::id(); 
             $sale->total_harga = $request->input('total_harga');
             $sale->jumlah_uang = $request->input('jumlah_uang');
             $sale->kembalian = $request->input('kembalian');
@@ -61,13 +61,12 @@ class SaleController extends Controller
 
             // Simpan setiap barang yang dipilih ke dalam tabel sale_items
             foreach ($selectedGoods as $good) {
-                // Simpan item penjualan
                 DB::table('sale_items')->insert([
-                    'saleid' => $sale->id, // Foreign key untuk transaksi
-                    'goodid' => $good['id'], // Foreign key untuk barang
-                    'jumlah' => $good['jumlah'], // Jumlah barang
-                    'harga_satuan' => $good['harga'], // Harga satuan
-                    'total_harga' => $good['harga'] * $good['jumlah'], // Total harga
+                    'saleid' => $sale->id, 
+                    'goodid' => $good['id'], 
+                    'jumlah' => $good['jumlah'], 
+                    'harga_satuan' => $good['harga'], 
+                    'total_harga' => $good['harga'] * $good['jumlah'],
                 ]);
 
                 // Kurangi jumlah barang di tabel goods
@@ -87,7 +86,10 @@ class SaleController extends Controller
 
             DB::commit();
 
-            return redirect()->route('koperasi.admin.penjualan')->with('success', 'Transaksi berhasil disimpan.');
+            return redirect()->route('koperasi.admin.penjualan')->with([
+                'alert-type' => 'success',
+                'message' => 'Transaksi berhasil disimpan.'
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);

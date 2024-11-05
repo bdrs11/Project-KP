@@ -18,7 +18,7 @@ class GoodsController extends Controller
                           ->orderBy('created_at', 'desc') // Urutkan berdasarkan waktu penambahan
                           ->get();
         } else {
-            $goods = Goods::orderBy('created_at', 'desc')->get(); // Urutkan semua data berdasarkan waktu terbaru
+            $goods = Goods::orderBy('created_at', 'desc')->get(); 
         }
     
         return view('koperasi.admin.kelola_barang.index', ['goods' => $goods]);
@@ -36,8 +36,8 @@ class GoodsController extends Controller
     {
         // Validasi semua input termasuk categoryId dan supplierId
         $validatedData = $request->validate([
-            'categoriesid' => 'required|exists:categories,id', // Validasi kategori
-            'supplierid' => 'required|exists:suppliers,id', // Validasi supplier
+            'categoriesid' => 'required|exists:categories,id', 
+            'supplierid' => 'required|exists:suppliers,id', 
             'nama_barang' => 'required|string|max:255',
             'harga' => 'required|numeric',
             // 'ukuran' => 'nullable|string|max:255',
@@ -46,15 +46,18 @@ class GoodsController extends Controller
         ]);
     
         $goods = Goods::create($validatedData);
+    
         // Beri notifikasi jika berhasil atau gagal
         if ($goods) {
-            $notification['alert-type'] = 'success';
-            $notification['message'] = 'Barang Created Successfully';
-            return redirect()->route('koperasi.admin.kelola_barang')->with($notification);
+            return redirect()->route('koperasi.admin.kelola_barang')->with([
+                'alert-type' => 'success',
+                'message' => 'Barang Created Successfully'
+            ]);
         } else {
-            $notification['alert-type'] = 'error';
-            $notification['message'] = 'Failed to Create Barang';
-            return redirect()->route('koperasi.admin.kelola_barang.create')->withInput()->with($notification);
+            return redirect()->route('koperasi.admin.kelola_barang.create')->with([
+                'alert-type' => 'error',
+                'message' => 'Failed to Create Barang'
+            ])->withInput();
         }
     }    
 
@@ -96,11 +99,11 @@ class GoodsController extends Controller
 
         if ($goods) {
             $notification['alert-type'] = 'success';
-            $notification['message'] = 'Supplier Deleted Successfully';
+            $notification['message'] = 'Barang Deleted Successfully';
             return redirect()->route('koperasi.admin.kelola_barang')->with($notification);
         } else {
             $notification['alert-type'] = 'error';
-            $notification['message'] = 'Failed to Delete Supplier';
+            $notification['message'] = 'Failed to Delete Barang';
             return redirect()->route('koperasi.admin.kelola_barang')->withInput()->with($notification);
         }
     }

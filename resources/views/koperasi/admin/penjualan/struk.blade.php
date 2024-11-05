@@ -46,8 +46,8 @@
 <body>
     <div class="struk-container">
         <h2 class="text-center title">Koperasi Sekolah</h2>
-        <p class="text-center">Jl. Tenggek-Selagedang, Pagelaran</p>
-        <p class="text-center">81529620220414142434</p>
+        <p class="text-center">Jl. Mekarsari-Selagedang, Pagelaran</p>
+        <p class="text-center">081220536317</p>
         <div class="divider"></div>
 
         <p>{{ $sale->created_at->format('d-m-Y H:i') }}</p>

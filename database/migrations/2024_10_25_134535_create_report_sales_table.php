@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamp('tanggal_transaksi');
             $table->integer('pemasukan');
-            $table->string('keterangan', 255);
             $table->foreignId('saleid')->constrained('sales')->onDelete('cascade');
             $table->timestamps();
         });

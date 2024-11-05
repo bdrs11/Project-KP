@@ -17,7 +17,7 @@
                         <!-- Form Pencarian -->
                         <form method="GET" action="{{ route('koperasi.admin.kelola_barang') }}" class="flex items-center">
                             <input type="text" name="search" placeholder="Cari Barang..." class="border border-gray-300 px-4 py-2 rounded-lg" value="{{ request('search') }}">
-                            <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+                            <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">Cari</button>
                         </form>
                     </div>
                     <br><br>
