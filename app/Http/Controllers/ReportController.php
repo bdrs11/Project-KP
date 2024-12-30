@@ -17,34 +17,20 @@ class ReportController extends Controller
         $month = $request->input('month', now()->month);
         $year = $request->input('year', now()->year);
     
-        // Ambil data penjualan berdasarkan filter bulan dan tahun
-        $sale_items = SaleItem::whereYear('tanggal_penjualan', $year)
-                    ->whereMonth('tanggal_penjualan', $month)
-                    ->get();
-    
         // Ambil barang yang masuk pada bulan dan tahun yang dipilih
-        $goods = Goods::whereYear('tanggal_ditambahkan', $year)
-                      ->whereMonth('tanggal_ditambahkan', $month)
+        $goods = Goods::whereYear('tanggal_masuk', $year)
+                      ->whereMonth('tanggal_masuk', $month)
                       ->get();
     
         // Buat array untuk menampung laporan
         $reports = [];
     
         foreach ($goods as $good) {
-            // Total barang terjual
-            $totalTerjual = $sale_items->where('goodid', $good->id)->sum('jumlah_barang');
-            // Total pemasukan
-            $totalPemasukan = $sale_items->where('goodid', $good->id)->sum('total_harga');
-            // Stock tersisa
-            $stockTersisa = $good->jumlah - $totalTerjual;
-    
+
             // Menyimpan laporan
             $reports[] = (object)[
                 'goods' => $good,
-                'total_terjual' => $totalTerjual,
-                'stock_tersisa' => $stockTersisa,
-                'total_pemasukan' => $totalPemasukan,
-                'tanggal_stok_masuk' => $good->tanggal_masuk, // Pastikan field ini ada di model Goods
+                'tanggal_stok_masuk' => $good->tanggal_masuk, 
             ];
         }
     
@@ -67,13 +53,12 @@ class ReportController extends Controller
                       ->whereMonth('tanggal_masuk', $month)
                       ->get();
     
-        // Buat array untuk menampung laporan
         $reports = [];
     
         foreach ($goods as $good) {
             // Total barang terjual
             $totalTerjual = $sale_items->where('goodid', $good->id)->sum('jumlah_barang');
-            // Stock tersisa
+
             $stockTersisa = $good->jumlah - $totalTerjual;
     
             // Menyimpan laporan
@@ -81,7 +66,7 @@ class ReportController extends Controller
                 'goods' => $good,
                 'total_terjual' => $totalTerjual,
                 'stock_tersisa' => $stockTersisa,
-                'tanggal_stok_masuk' => $good->tanggal_masuk, // Pastikan field ini ada di model Goods
+                'tanggal_stok_masuk' => $good->updated_at,
             ];
         }
     

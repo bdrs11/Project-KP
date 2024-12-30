@@ -34,7 +34,7 @@ class StockController extends Controller
     {
         $validatedData = $request->validate([
             'nama_barang' => 'required|string|max:255',
-            // 'harga' => 'required|numeric',
+            'harga' => 'required|numeric',
             'ukuran' => 'nullable|string|max:255',
             'jumlah' => 'required|integer',
             'tanggal_masuk' => 'required|date',

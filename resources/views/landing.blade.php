@@ -74,7 +74,7 @@
     <!-- Footer -->
     <footer class="bg-light py-3 text-center">
         <div class="container">
-            <p>© 2024 Badrussalam. Hak cipta dilindungi undang-undang.</p>
+            <p></p>
         </div>
     </footer>
 

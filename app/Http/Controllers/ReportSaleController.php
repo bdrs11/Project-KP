@@ -16,7 +16,7 @@ class ReportSaleController extends Controller
         $year = $request->input('year', now()->year);
     
         // Memfilter penjualan berdasarkan bulan dan tahun yang dipilih
-        $sale_items = SaleItem::with('sale.goods') // Sesuaikan dengan nama relasi yang benar
+        $sale_items = SaleItem::with('sale.goods') 
             ->whereMonth('tanggal_penjualan', $month)
             ->whereYear('tanggal_penjualan', $year)
             ->get();
@@ -48,7 +48,6 @@ class ReportSaleController extends Controller
                 ReportSale::create([
                     'tanggal_transaksi' => $saleItem->tanggal_penjualan,
                     'pemasukan' => $saleItem->total_harga,
-                    'keterangan' => $keterangan,
                     'saleid' => $saleItem->saleid,
                 ]);
             }
@@ -67,6 +66,5 @@ class ReportSaleController extends Controller
         
         // Unduh atau tampilkan PDF
         return $pdf->download('laporan_stock.pdf');
-    }
-    
+    }  
 }

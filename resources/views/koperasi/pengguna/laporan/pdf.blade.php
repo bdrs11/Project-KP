@@ -64,18 +64,18 @@
                     <td>{{ $report->goods->nama_barang ?? 'Tidak ada data' }}</td>
                     <td>{{ number_format($report->goods->harga ?? 0, 0, ',', '.') }}</td>
                     <td>{{ $report->goods->jumlah ?? 'Tidak ada data' }}</td>
-                    <td>{{ $report->tanggal_stok_masuk ?? 'Tidak ada data' }}</td>
+                    <td>{{ $report->goods->tanggal_masuk ?? 'Tidak ada data' }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
     <!-- Tanda Tangan Section -->
-    <div class="signature-section">
+    {{-- <div class="signature-section">
         <div class="signature">
             <p>Petugas Koperasi</p>
             <div class="signature-line">Badrussalam</div>
         </div>
-    </div>
+    </div> --}}
 </body>
 </html>

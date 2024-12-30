@@ -18,11 +18,11 @@
                             <x-input-error class="mt-2" :messages="$errors->get('nama_barang')" />
                         </div>
 
-                        {{-- <div class="max-w-xl">
+                        <div class="max-w-xl">
                             <x-input-label for="harga" value="Harga Rp" />
                             <x-text-input id="harga" type="text" name="harga" class="mt-1 block w-full" value="{{ old('harga', $goods->harga) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('harga')" />
-                        </div> --}}
+                        </div> 
 
                         <div class="max-w-xl">
                             <x-input-label for="ukuran" value="Ukuran" />

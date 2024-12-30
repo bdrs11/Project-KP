@@ -12,7 +12,7 @@
   
                     <div class="flex justify-between items-center">
                         <!-- Tombol New Barang -->
-                        <x-primary-button tag="a" href="{{route('koperasi.admin.kelola_barang.create')}}">+ Barang</x-primary-button>
+                        <x-primary-button tag="a" href="{{route('koperasi.admin.kelola_barang.create')}}">Tambah Barang</x-primary-button>
   
                         <!-- Form Pencarian -->
                         <form method="GET" action="{{ route('koperasi.admin.kelola_barang') }}" class="flex items-center">
@@ -54,7 +54,7 @@
                                                     x-data=""
                                                     x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
                                                     x-on:click="$dispatch('set-action', '{{ route('koperasi.admin.kelola_barang.destroy', $good->id) }}')"
-                                                >{{ __('Delete') }}</x-danger-button>
+                                                >{{ __('Hapus') }}</x-danger-button>
                                                 </td>
                                             </tr>
                                             @endforeach

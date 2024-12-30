@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <x-primary-button tag="a" href="{{route('koperasi.admin.suppliers.create')}}">+ Supplier</x-primary-button>
+                    <x-primary-button tag="a" href="{{route('koperasi.admin.suppliers.create')}}">Tambah Supplier</x-primary-button>
                     <br>
 
                     <div class="flex flex-col">
@@ -42,7 +42,7 @@
                                             x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
                                             x-on:click="$dispatch('set-action', '{{ route('koperasi.admin.suppliers.destroy', $pemasok->id) }}')"
-                                        >{{ __('Delete') }}</x-danger-button>
+                                        >{{ __('Hapus') }}</x-danger-button>
                                       </td>
                                 @endforeach
                                 </tbody>

@@ -34,9 +34,9 @@
                             </div>
                             <div class="col-span-2">
                                 <x-primary-button class="mt-4">Filter</x-primary-button>
-                                <x-primary-button tag="a" href="{{route('koperasi.admin.laporan_keuangan.pdf')}}">
+                                <x-primary-button tag="a" href="{{ route('koperasi.admin.laporan_keuangan.pdf', ['month' => request('month'), 'year' => request('year')]) }}">
                                     Cetak PDF
-                                </x-primary-button>
+                                </x-primary-button>                                
                             </div>
                         </div>
                     </form>
@@ -62,7 +62,7 @@
                                     @foreach($reports as $report)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{{ $num++ }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $report->sale_item->good->nama_barang }}</td> <!-- Asumsi ada relasi dengan good -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $report->sale_item->good->nama_barang }}</td> 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ number_format($report->sale_item->harga_satuan, 0, ',', '.') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $report->jumlah_barang }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ number_format($report->pemasukan, 0, ',', '.') }}</td>
